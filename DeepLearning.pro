@@ -8,4 +8,5 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+    DataStructures.hpp \
     escapi.h

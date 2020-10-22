@@ -76,6 +76,7 @@ void Graph::addNode(const unsigned & ident, const unsigned & binary)
 typedef std::pair <int, Node*> Cost;
 void Graph::addEdge(const unsigned & from, const unsigned & to)
 {
+    if (!nodeIsExist(to)) return;
     Node *f = (nmap.find(from)->second);
     Node *t = (nmap.find(to)->second);
 

@@ -1,4 +1,0 @@
-﻿  main.cpp
-C:\Users\Sky\source\repos\DeepLearning\DeepLearning\main.cpp(34,23): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\Sky\source\repos\DeepLearning\DeepLearning\main.cpp(45,19): warning C4018: '<' : incompatibilité signed/unsigned
-  DeepLearning.vcxproj -> C:\Users\Sky\source\repos\DeepLearning\Debug\DeepLearning.exe

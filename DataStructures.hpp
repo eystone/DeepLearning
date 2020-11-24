@@ -24,19 +24,18 @@ unsigned ConvertRGBBinToMono(const unsigned& PixByte) {
 
 class Node {
 private:
+    unsigned uId;
     unsigned Mono;
     std::map<Node*, int> neighbors;
-    unsigned uId;
 public:
-    Node(const unsigned &uid, const unsigned& mono) : uId(uid), Mono(mono) {}
+    Node(const unsigned & uid, const unsigned & mono) : uId(uid), Mono(mono) {}
     
-    unsigned getMono() const  { return Mono; }
-
     void addNeighbor(Node* neighbor) {
-        int weight = this->getMono() - neighbor->getMono();
-        neighbors[neighbor] = weight;
+        neighbors[neighbor] = int(this->getMono()) - int(neighbor->getMono());
     }
+
     std::map<Node*, int> getNeighbors() { return neighbors; }
+    unsigned getMono() const  { return Mono; }
     unsigned getUId() const { return uId; }
 };
 
@@ -47,8 +46,10 @@ public:
     Graph() {}
 
     std::vector<Node*> getNodes() { return Nodes; }
+
     void addNode(const unsigned& nodeID, const unsigned& mono);
     void addEdge(const unsigned& firstNodeID, const unsigned& secondNodeID);
+
     void printGraph();
     void drawImage(const unsigned& mW);
 };
@@ -64,7 +65,7 @@ void Graph::addEdge(const unsigned& firstNodeID, const unsigned& secondNodeID) {
 }
 
 void Graph::printGraph() {
-    for (unsigned i = 0; i < Nodes.size(); i=i+1) {
+    for (unsigned i = 0; i < Nodes.size(); i++) {
         std::map<Node*, int> neighbors = Nodes[i]->getNeighbors();
         std::cout << "Node: " << Nodes[i]->getUId() << " connected with: \n";
         for (std::pair<Node*, int> neighbor : neighbors) {

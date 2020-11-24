@@ -1,33 +1,31 @@
 #pragma once
 #include "DataStructures.hpp"
 
-void ParcourirGraph(std::map<Node*, bool>& visited, Node* node, std::string& Barcode, const unsigned& mW) {
+void ParcourirGraph(std::map<Node*, bool>& visited, Node* node, std::string& Barcode) {
     visited[node] = true;
     for (std::pair<Node*, int> pairNode : node->getNeighbors()) {
         if (!visited[pairNode.first]) {
 
             Barcode += (pairNode.first->getMono() < 130) ? '1' : '0';
 
-            ParcourirGraph(visited, pairNode.first, Barcode, mW);
+            ParcourirGraph(visited, pairNode.first, Barcode);
         }
     }
 }
 
 std::string ProcessBarcode(const std::string& Barcode) {
-    std::string processedBarcode = "";
-    bool countB = false;
-    unsigned count = 0;
-    for (unsigned i = 0; i < Barcode.size() - 1; i = i + 1) {
+    std::string processedBarcode("");
+    bool countB(false);
+    unsigned count(0);
+    for (unsigned i(0); i < Barcode.size(); i++) {
         if (Barcode[i] == '1') {
             countB = true;
             count += 1;
-        } else {
-            if (countB) {
-                processedBarcode += (count > 1) ? '1' : '0';
-                countB = false;
-                count = 0;
-            }
-
+        }
+        else if (countB) {
+            processedBarcode += (count > 1) ? '1' : '0';
+            countB = false;
+            count = 0;
         }
     }
     return processedBarcode;
@@ -43,28 +41,20 @@ std::string ReadBarcode(Graph& graph, const unsigned& mW, const unsigned& mH) {
         }
     }
 
-    std::vector<Node*> allNodes = BarcodeGraph.getNodes();
-    unsigned stopVar = allNodes[allNodes.size() - 1]->getUId();
-    for (Node* node : allNodes) {
+    for (Node* node : BarcodeGraph.getNodes()) {
         unsigned x = (node->getUId() % mW);
         unsigned y = (node->getUId() / mW);
 
-        //if (x%mW == 0 and y > 0)
-            //BarcodeGraph.addEdge(x + y * mW, x + (y-1) * mW);
-
-        unsigned nextP = (x + 1) + y * mW;
-        if (nextP <= stopVar)
-            BarcodeGraph.addEdge(x + y * mW, nextP);
+        if ((x + 1) + y * mW < BarcodeGraph.getNodes()[BarcodeGraph.getNodes().size()-1]->getUId())
+            BarcodeGraph.addEdge(x + y * mW, (x + 1) + y * mW);
     }
-    BarcodeGraph.printGraph();
-    BarcodeGraph.drawImage(mW);
-
+    //BarcodeGraph.printGraph();
+    //BarcodeGraph.drawImage(mW);
 
     //Process graph to find result
     std::string Barcode;
-
     std::map<Node*, bool> visitedNodes;
-    ParcourirGraph(visitedNodes, BarcodeGraph.getNodes()[0], Barcode, mW);
+    ParcourirGraph(visitedNodes, BarcodeGraph.getNodes()[0], Barcode);
 
     std::cout << Barcode << std::endl;
 

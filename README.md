@@ -1,61 +1,98 @@
-## PTUT IA - Ception
+#ESCAPI
+Extremely Simple Capture API
 
-### Using :
+Copyright (c)2015 Jari Komppa
+http://iki.fi/sol
 
-* https://github.com/jarikomppa/escapi : Simple Video capture API.
-* https://www.libsdl.org/				 : Lib for rendering, GUI ...
+Binaries
+--------
+Binaries available at http://iki.fi/sol/zip/escapi3.zip
 
-### Example (100 x 50):
+Usage
+-----
+Add escapi.cpp to your project. This file contains code 
+to load the escapi.dll. See the samples ('simplest' recommended)
+for API usage.
 
-```
-ooooo--o--,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-ooooooooooo-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-ooooooooooo--o-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-ooooooooooooooo--o-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-ooooooooooooooo-----o-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-oooooooooooooooooooo--oo---,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-ooooooooooooooooooo-----------,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-oooooooooooooooooooooo-----------,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-oooooooooooooooooooooo---------------,,,,,,oOOO+++++O0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-oooooooooooooooooooooooo----------------,oO+O0O0Oooo+++--,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,-
-oooooooooooooooooooooo--o---------------+oo++OOOO+++OOooo--,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,-ooo
-oooooooooooooooooooooooooo-------------+o-oooo++O@@@@@00+o-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,-ooooo
-ooooooooooooooooooooooooooo-----------+o----++O0@@@@@@@@0+o-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,oooooooo
-oooooooooooooooooooooooooo-----------o--,-o+O00@@@@@@@@@@0O+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,ooooooooooo
-ooooooooooooooooooooooooo----------------o++O00@@@@@@@@@@00O,,,,,,,,,,,,,,,,,,,,,,,,--,+oooooooooooo
-ooooooooooooooooooooooooo--oo-------------++--o+O0oo++O0O0O0oo-,,,,,,,,,,,,,,,,,,,,,oooooooooooooooo
-+oooooooooooooooooooooooooo---------------oo+---+@+o---++O00ooooo,,,,,,,,,,,,,,,,-oo+o+ooooooooooooo
-++++ooooooooooooooooooooooo--------o--------,-,-O@00++O0@@0O@Ooooooo-,,,,,,,,,,-oooooooooooooo+ooooo
-+++++++++oooooooooooooooooooo--------------oO0Oo0@0@@@@@@@00@+oooooooooo--,,,oooooooooooooooooooo,,,
-++++++++++ooooooooooooooooooo------------o+O00OooO0@@@@@@@0+00oooooooooo---ooooooooooooooooooo-o,-,,
-OO++++++++++++ooooooooooooooooo-------,,oo+OOOo--o++@@@@@0O@@0ooooooooooooooooooooooooooooo--,,----,
-OOOOOOO++++++++++ooooooooooooo-o-------,ooo+O+o--O@@@@@@@0O@@oooooooooooooooooooooooooooo---,,----,,
-OOOOOOO++++++++++++++ooooooooooooo-----,-ooo++o+OOOO@@@@@000oooooooooooooooooooooooooo,---.,,.--o,--
-OOOOOOOOOOOO++++++++++++++oooooooooooo----ooo+-+O0000000000ooooooooooooooooooooooooo------..,-...-,.
-OOOOOOOOOOOOOO+++++++++++++++ooooooooooo--o-ooo--oooO0000OOooooooooooooooooooooooooo,-o...,,,....,,,
-00OOOOOOOOOOOOOOOOO++++++++++++++ooooooooooooooo+0@@@@@0OOooooooooooooooooooooooooooo-,-.........,,,
-00000OOOOOOOOOOOOOOOOO+++++++++++++ooooooooooooOOOO0@@0oo@+oooooooooooooooooooooooooo,....,-......-,
-00000000OOOOOOOOOOOOOOOOOOO++++++++++oooooooo--ooooooooo0@0oooooooooooooooooooooooooo,,.....,.....--
-00000000000OOOOOOOOOOOOOOOOOOO++++++++++o+oo--------ooO@@@0oooooooooooooooooooooooooo,-............,
-00000000000000OOOOOOOOOOOOOOOOOO++++++++++,--------oO0@@@@0+-,-+ooooooooooooooooooooo,-.,..........,
-00000000000000000OOOOOOOOOOOOOOOOO+++o-,,,.,-----oO0@@0@@@0@-ooooooooooooooooooooooooo........,....,
-0000000000000000000OOOOOOOOOOOOOO+o---,,,,.,------00OO0@@@0@Ooooooooooooooooooooooooo+,,..........,,
-00@@0000000000000000000OOOOOOOOO+oo-o,--,,,,-oooo--oO00@@@@@ooooooo---oooooo-ooooooooo-,..........,.
-@@@@@0000000000000000000OOOOOOOo----,-o-,---oo++++OO000@0@@ooooooo-ooo-ooooooooooooooo+,............
-@@@@@@@@@000000000000000O0OOOO,,,----ooo----++++O++OO00@@@OOooooo--oo-oooooooo-oooooooo,,...........
-@@@@@@@@@000000000000000Ooo+ooooo-,..,,----oo+OOOOOOO00@@oooooo-oooo--o----o----ooooooo,,.........,-
-@@@@@@@@@@0000000000000O+ooooo--ooo-,...,--o-o0oo00000@@+oooooooooo--o-o--------o-ooooo-,........---
-@@@@@@@@0000@000000000Oooo-ooooo--ooo--...---ooo+ooO0@@+ooo-oo---oo--oo-----------oooooo,......,-ooo
-@@@@@@@@@@@@@@0000000Ooo-ooooooooo-ooooooo,.o,,oo---oO@oooo,o-o---oo-o--------o--ooooooo--oooo+ooooo
-@@@@@@@@@0@@@@@@@000O+oo-oo-oooooo,-ooooooo-.-,+---oo+@oooo,ooo--ooo-o----------oo-ooooooooooo++++++
-@@@@@@@@@@@@@@@@@000ooooo-o--oooooo,,ooooooo-.,O-ooo-o@+o,--+ooooooooo-------o--o-ooooooooo++o++o++o
-@@@@@@@@@@@@@@@@@@0+--oo-,o-,-ooooo-,--oooooo--0oooooo@oo-,-+oooooooo-------------ooooooooo++++++++o
-@@@@@@@@@@@@@@@0000oo-ooo,-o,,-oooo--,,-ooooooo0oooooo@ooo,,+oooooo-oo--------,---oooooooo++++++o++o
-@@@@@@@@@@@@@@@@@Ooooo-oo,-oo,.-oooo--,,------o0oooooo@+o--.+-o----oo-------------oo--oooo++++++++oo
-@@@@@@@@@@@@@@@00oooooo-o-,oo-.,-ooo---,,,-----0-ooooo@++--,O----------------,,---oo-oooo++oo++++ooo
-@@@@@@@@@@@@@@@0Ooo-ooooooo-oo-.--oo---------o-@-ooooo@@+o-,0----o-------,--o,,---oo-ooooooooo+ooooo
-@@@@@@@@@@@@@@@0+oo--oooo-o--oo-.-oooo-------o,@oooooo@@oo-,0-------oo---,--o.,--o--oooooooooo+ooooo
-@@@@@@@@@@@@@@@O++ooo-ooooo,,-oo.,ooooo------o,0oooooo@@oo-,0o---o----o--,-o-.------oooooo+ooooooooo
-@@@@@@@@@@@@@@0oooooooo-oooo,,---.-ooooo---,--,0ooo-oo@@oo-,oo----o,----,,-o,--------ooooooooooooooo
-@@@@@@@@@@@@@@@ooooooooo-oooo,,-o.,oooooo---,,,O-ooooo@@oo-,,o----,-+-+-----,--------ooooooooooooooo
-```
+License
+-------
+ESCAPI is released under the unlicense. In short, use for any purpose 
+as long as you don't hold me responsible for anything. It would be 
+nice if you'd toss me a mail if you play with this thing.
+
+Some examples use external libraries with different licenses.
+
+What is ESCAPI?
+---------------
+A fairly easy to use webcam (or other video input device) capture 
+API.
+
+Version 2.0 adds support for multiple capture devices and requesting
+the capture device names, as well as new examples.
+
+Version 2.1 updates the examples, including purebasic and blizmax
+examples, as well as an OpenGL based 'funny mirrors'-example, and 
+fills out the top 8 "alpha" bits in the captured data with 0xff.
+
+Version 3.0 is complete rewrite using windows media foundation
+instead of directshow. The version adds interface for playing
+with camera properties, new examples, automatic camera resolution
+selection, 64 bit builds, and source release. Version 3.0 onwards
+requires windows vista or later (7, 8, 8.1, 10..).
+
+Motivation
+----------
+One of the last things that I added to 'textmedia' was webcam support.
+I got interested in webcams for a while, thinking I might whip up
+some kind of "eye toy"-ish game using a web cam. 
+
+One of the bad sides about webcams is that the programming API is
+so complicated - the only way to use them back then was through DirectShow.
+Simply getting data from the camera is a fairly complicated process,
+while not giving you much control. 
+
+So, to get rid of the directmedia SDK requirement, I split the required
+code into a separate DLL, and now I present to you the ESCAPI:
+
+- setupESCAPI
+  Initialize the whole library. (in escapi.cpp)
+
+- countCaptureDevices
+  Request number of capture devices available.
+  
+- getCaptureDeviceName
+  Request the printable name of a capture device.
+  
+- initCapture
+  Tries to open the video capture device. Returns 0 on failure, 1 on success.
+  
+- doCapture 
+  Requests a video frame to be captured.
+  
+- isCaptureDone 
+  Returns 1 when the requested frame has been captured.
+
+- deinitCapture 
+  Closes the video capture device.
+  
+So basically, you call setup to initialize the library,
+call init to start the capture device, and call doCapture to 
+start the capture process. When the capture is done, you can ask for 
+another frame. Etc.
+
+Unfortunately, "eye toy"-wise, the webcams on PCs are quite laggy,
+and this varies from a camera to the next. My logitech messenger
+camera has a lag or about one second, while my creative instant camera
+is has a more tolerable lag. Both cameras also perform some automatic 
+contrast trickery and other stuff like that which won't be quite game-friendly.
+
+Thus, I never ended up doing that "eye toy"-like game. Maybe one day =)
+
+Dependencies
+------------
+Some of the examples use external libraries:
+
+- SDL2, under zlib/libpng license, http://libsdl.org
+- some stb libraries, public domain, https://github.com/nothings/stb
+- ocornut's ImGui, MIT license, https://github.com/ocornut/imgui
+

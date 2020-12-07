@@ -1,90 +1,88 @@
+﻿#ifndef DATASTRUCTURES_HPP
+#define DATASTRUCTURES_HPP
+
+#include <iostream>
 #include <vector>
 #include <map>
 
-#ifndef DATASTRUCTURES_HPP
-#define DATASTRUCTURES_HPP
-
-struct Pix
-{
-    unsigned R;
-    unsigned G;
-    unsigned B;
-    unsigned Mono; // 0=White / 255=Black
-
-    Pix (const unsigned & PixByte );
-};
-
-Pix::Pix( const unsigned & PixByte )
-{
+unsigned ConvertRGBBinToMono(const unsigned& PixByte) {
+    unsigned R, G, B;
     //DECODING RGB24
     // R=bits 16-24
-    R = ( (PixByte >> 16) & 255);
+    R = ((PixByte >> 16) & 255);
     // G=bits 8-16
-    G = ( (PixByte >> 8) & 255);
+    G = ((PixByte >> 8) & 255);
     // B=bits 0-8
     B = (PixByte & 255);
 
     //coeff based on what is most perceived as brightness by humans as color in one channel
     // http://poynton.ca/notes/colour_and_gamma/ColorFAQ.html#RTFToC9
-    Mono = unsigned( (0.2125 * R) + (0.7154 * G) + (0.0721 * B) );
+    return unsigned((0.2125 * R) + (0.7154 * G) + (0.0721 * B));
 }
 
+//Edge count and nextNode
 
 class Node {
-
-    unsigned Ident;
-    Pix Data;
-
+private:
+    unsigned uId;
+    unsigned Mono;
+    std::map<Node*, int> neighbors;
 public:
-    typedef std::pair <int, Node*> Cost;
-    std::vector<Cost> Edges;
+    Node(const unsigned & uid, const unsigned & mono) : uId(uid), Mono(mono) {}
+    
+    void addNeighbor(Node* neighbor) {
+        neighbors[neighbor] = int(this->getMono()) - int(neighbor->getMono());
+    }
 
-    Node(const unsigned & i, const unsigned & binary) : Ident(i), Data(binary) {}
-
-    unsigned getMono() const  { return Data.Mono; }
-    unsigned getIdent() const { return Ident; }
+    std::map<Node*, int> getNeighbors() { return neighbors; }
+    unsigned getMono() const  { return Mono; }
+    unsigned getUId() const { return uId; }
 };
 
-class Graph
-{
+class Graph {
+private:
+    std::vector<Node*> Nodes;
 public:
-    typedef std::map<unsigned, Node*> Nmap;
-    Nmap nmap;
-
     Graph() {}
 
-    bool nodeIsExist (const unsigned & ident);
-    void addNode(const unsigned & ident, const unsigned & binary);
-    void addEdge (const unsigned & from, const unsigned & to); // compute cost
+    std::vector<Node*> getNodes() { return Nodes; }
+
+    void addNode(const unsigned& nodeID, const unsigned& mono);
+    void addEdge(const unsigned& firstNodeID, const unsigned& secondNodeID);
+
+    void printGraph();
+    void drawImage(const unsigned& mW);
 };
 
-bool Graph::nodeIsExist(const unsigned & ident)
-{
-    Nmap::iterator itr = nmap.find(ident);
-    return itr != nmap.end(); // if not find, not exist so if different exist
+void Graph::addNode(const unsigned & nodeID, const unsigned& mono) {
+    Node* node = new Node(nodeID, mono);
+    Nodes.push_back(node);
 }
 
-void Graph::addNode(const unsigned & ident, const unsigned & binary)
-{
-    if (nodeIsExist(ident)) return;
-    Node *n;
-    n = new Node (ident, binary);
-    nmap[ident] = n;
-    return;
+void Graph::addEdge(const unsigned& firstNodeID, const unsigned& secondNodeID) {
+    Nodes[firstNodeID]->addNeighbor(Nodes[secondNodeID]);
+    Nodes[secondNodeID]->addNeighbor(Nodes[firstNodeID]);
 }
 
-typedef std::pair <int, Node*> Cost;
-void Graph::addEdge(const unsigned & from, const unsigned & to)
-{
-    if (!nodeIsExist(to)) return;
-    Node *f = (nmap.find(from)->second);
-    Node *t = (nmap.find(to)->second);
+void Graph::printGraph() {
+    for (unsigned i = 0; i < Nodes.size(); i++) {
+        std::map<Node*, int> neighbors = Nodes[i]->getNeighbors();
+        std::cout << "Node: " << Nodes[i]->getUId() << " connected with: \n";
+        for (std::pair<Node*, int> neighbor : neighbors) {
+            std::cout << "\tnode: " << neighbor.first->getUId() << " weight= " << neighbor.second << std::endl;
+        }
+        std::cout << "\n";
+    }
+}
 
-    //proc cost
-    int cost = int(f->getMono()) - int(t->getMono()); //if brighter pos value else neg value
-
-    Cost edge = std::make_pair(cost, t);
-    f->Edges.push_back(edge);
+void Graph::drawImage(const unsigned &mW) {
+    //Test a Ascii art
+    //char light[] = "~.,-o+O0@";
+    char light[] = "...-o+@@@";
+    for (Node* node : Nodes) {
+        std::cout << light[7 - ((node->getMono() >> 5) & 7)];
+        if (( (node->getUId()+1) % mW) == 0) std::cout << std::endl;
+    }
 }
 
 #endif // DATASTRUCTURES_HPP
